@@ -9,6 +9,8 @@ public class VectorExample : MonoBehaviour
         Vector3 b = new Vector3(2, 0, 0);
         Vector3 c = a + b;
 
+        
+
         Debug.Log("Vector c " + c);
         Debug.Log("Vector length " + c.magnitude);
         Debug.Log("Vector normalize " + c.normalized);

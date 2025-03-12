@@ -7,8 +7,10 @@ public class MoveObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float move = Input.GetAxis("Horizontal");
-        transform.Translate(Vector3.right * move * speed * Time.deltaTime);
+        Vector3 move = new Vector3 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"),0);
+        // transform.Translate(move * speed * Time.deltaTime);
+
+        transform.position += (move * speed * Time.deltaTime);
 
 
     }
