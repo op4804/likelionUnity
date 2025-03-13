@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -10,6 +11,17 @@ public class Player : MonoBehaviour
     private Vector2 maxBounds;
 
     Animator ani;
+
+    // 미사일
+    public GameObject[] bullet;
+    public Transform pos = null;
+
+
+    // 아이템
+
+    public int power = 0;
+
+    // 필살기
 
     void Start()
     {
@@ -61,6 +73,11 @@ public class Player : MonoBehaviour
             ani.SetBool("up", false);
         }
 
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Instantiate(bullet[power], pos.position, Quaternion.identity);
+        }
+
         // transform.Translate(moveX, moveY, 0);
 
         // 경계를 벗어나지 않도록 위치 제한
@@ -71,6 +88,14 @@ public class Player : MonoBehaviour
 
         transform.position = newPosition;
 
+    }
+
+    internal void PowerUp()
+    {
+        if(power < 3)
+        {
+            power++;
+        }
     }
 }
 

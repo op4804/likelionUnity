@@ -7,10 +7,12 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    int score = 0;
+    public int score = 0;
     public Text scoreText;
     public Text startText;
 
+    public bool isGameClear = false;
+    public Text clearText;
 
     private void Awake()
     {
@@ -51,5 +53,10 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         
+    }
+
+    public void ActiveClearScoreText()
+    {
+        clearText.gameObject.SetActive(true);
     }
 }
