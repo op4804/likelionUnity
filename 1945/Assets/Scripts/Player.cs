@@ -1,5 +1,7 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -21,7 +23,15 @@ public class Player : MonoBehaviour
 
     public int power = 0;
 
+    [SerializeField]
+    private GameObject powerUpEffect;
+
     // ÇÊ»ì±â
+    public GameObject lazor;
+    public float lazorCharge;
+
+    [SerializeField]
+    private Image gague; 
 
     void Start()
     {
@@ -75,8 +85,41 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            Instantiate(bullet[power], pos.position, Quaternion.identity);
+            GameObject go = Instantiate(bullet[power], pos.position, Quaternion.identity);
+            go.GetComponent<PBullet>().bulletDamage = (power + 1) * 10;
+
         }
+        else if (Input.GetKey(KeyCode.X))
+        {
+            lazorCharge += Time.deltaTime;
+            if (lazorCharge >= 1)
+            {
+                GameObject go = Instantiate(lazor, pos.position, Quaternion.identity);
+                Destroy(go, 3);
+                lazorCharge = 0;
+            }
+        }      
+        else
+        {
+            lazorCharge -= Time.deltaTime;
+
+            if(lazorCharge <= 0)
+            {
+                lazorCharge = 0;
+            }
+        }
+        gague.fillAmount = lazorCharge;
+
+        /*
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            currentLazor = Instantiate(lazor, pos.position, Quaternion.identity);
+        }
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            Destroy(currentLazor);
+        }
+        */
 
         // transform.Translate(moveX, moveY, 0);
 
@@ -95,6 +138,8 @@ public class Player : MonoBehaviour
         if(power < 3)
         {
             power++;
+            GameObject go = Instantiate(powerUpEffect, transform.position, Quaternion.identity);
+            Destroy(go, 1f);
         }
     }
 }

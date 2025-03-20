@@ -12,10 +12,12 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject enemy;
     public GameObject enemy2;
+    public GameObject boss;
 
     bool switchSpawn = true;
     bool switchSpawn2 = true;
 
+    public GameObject bossWarning;
 
     void Start()
     {
@@ -59,8 +61,18 @@ public class SpawnManager : MonoBehaviour
     {
         switchSpawn2 = false;
         StopCoroutine("RandomSpawn2");
+        CameraShake.instance.ShowCameraShake();
         // 보스전 시작
+        bossWarning.SetActive(true);
+        Invoke("GenerateBoss", 5);
     }
+
+    private void GenerateBoss()
+    {
+        bossWarning.SetActive(false);
+        Instantiate(boss, new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
+    }
+
 
 
     // Update is called once per frame
