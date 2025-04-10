@@ -2,6 +2,7 @@ using System;
 using Unity.VisualScripting;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     public GameObject slash;
 
     public GameObject jumpDust;
+    public GameObject wallDust;
 
     // 그림자
     public GameObject shadow;
@@ -95,6 +97,12 @@ public class Player : MonoBehaviour
         {
             Attack();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            // 시간 느려지기
+            TimeController.instance.SetSloawMotion(true);
+        }
     }
 
     private void Attack()
@@ -140,6 +148,20 @@ public class Player : MonoBehaviour
                     isJump = false;
                 }
             }
+            else
+            {
+                if (isWall)
+                {
+                    pRig2D.linearVelocity = new Vector2(pRig2D.linearVelocityX, pRig2D.linearVelocityY * slidingSpeed);
+                    isWallJump = false;
+                    pAnimator.SetBool("grab", true);
+                }
+                else
+                {
+                    pAnimator.SetBool("grab", false);
+
+                }
+            }
         }
     }
 
@@ -150,12 +172,8 @@ public class Player : MonoBehaviour
 
         // 벽체크
         isWall = Physics2D.Raycast(wallChk.position, Vector2.right * isRight, wallchkDistance, wLayer);
-        pAnimator.SetBool("grab", isWall);
-        if (isWall)
-        {
-            pRig2D.linearVelocity = new Vector2(pRig2D.linearVelocityX, pRig2D.linearVelocityY * slidingSpeed);
-            isWallJump = false;
-        }
+        
+
     }
 
     void Jump()
@@ -187,7 +205,8 @@ public class Player : MonoBehaviour
         //벽을 잡고있는 상태에서 점프
         isWallJump = true;
         //벽점프 먼지
-        JumpDust();
+        GameObject go = Instantiate(wallDust, transform.position + new Vector3(0.8f * isRight, 0, 0), Quaternion.identity);
+        go.GetComponent<SpriteRenderer>().flipX = !sp.flipX;
         Invoke("FreezeX", 0.3f);
         //물리
         pRig2D.linearVelocity = new Vector2(-isRight * wallJumpPower, 0.9f * wallJumpPower);
@@ -220,5 +239,15 @@ public class Player : MonoBehaviour
     public void JumpDust()
     {
         Instantiate(jumpDust, transform.position + new Vector3(0, -0.4f, 0), Quaternion.identity);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        //보스 씬 진입 포탈과 충돌 체크
+        if (other.CompareTag("BossScene"))
+        {
+            //보스 씬으로 전환
+            SceneManager.LoadScene("Boss");
+        }
     }
 }
