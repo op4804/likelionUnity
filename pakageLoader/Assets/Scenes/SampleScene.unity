@@ -193,7 +193,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: -6205605724983672679, guid: 0df228da3461d964fab8f22fe862121f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -280,7 +280,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -2
   m_Sprite: {fileID: -2736876529880562102, guid: 3b72cce75861420489e149b46b98a12b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -390,7 +390,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1003573495
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -85727878, guid: 687df074731fbf744b668d2275dbb675, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -633,7 +633,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: -6205605724983672679, guid: 0df228da3461d964fab8f22fe862121f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 552505869}
   - component: {fileID: 552505872}
   - component: {fileID: 552505871}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -707,15 +707,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45b4405ac6a20b4488bfcd2f3f40b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDirection: {x: 0, y: 0}
+  knockbackDuration: 0
+  attackCheck: {fileID: 552505870}
+  attackCheckRadius: 0
   groundCheck: {fileID: 1709154520}
   groundCheckDistance: 0.4
   wallCheck: {fileID: 552505870}
   wallCheckDistance: 0.8
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 256
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  stunDuration: 0
+  stunDirection: {x: 0, y: 0}
+  counterImage: {fileID: 0}
   moveSpeed: 1.5
   idleTime: 2
+  battleTime: 0
+  attackDistance: 0
+  attackCooldown: 0
+  lastTimeAttacked: 0
 --- !u!4 &552505870
 Transform:
   m_ObjectHideFlags: 0
@@ -880,7 +894,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -2
   m_Sprite: {fileID: -2736876529880562102, guid: 3b72cce75861420489e149b46b98a12b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1037,7 +1051,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -2
   m_Sprite: {fileID: -2736876529880562102, guid: 3b72cce75861420489e149b46b98a12b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1154,7 +1168,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -3
   m_Sprite: {fileID: 8559549211684105477, guid: dbccb723f5d5e3b469d2a02981bdf62c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1245,7 +1259,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -310480023
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.021739125, y: 0.021739125, z: 0}
@@ -54192,7 +54206,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -3
   m_Sprite: {fileID: 8559549211684105477, guid: dbccb723f5d5e3b469d2a02981bdf62c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -54437,7 +54451,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 157322433
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -3318188226485093758, guid: ae72133dacba6ec4eb33ecde48f50e56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -54522,7 +54536,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -3
   m_Sprite: {fileID: 8559549211684105477, guid: dbccb723f5d5e3b469d2a02981bdf62c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -54622,9 +54636,9 @@ GameObject:
   - component: {fileID: 1499091625}
   - component: {fileID: 1499091628}
   - component: {fileID: 1499091627}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54641,17 +54655,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57649383263b71a4aa099f7e84a814bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDirection: {x: 0, y: 0}
+  knockbackDuration: 0
+  attackCheck: {fileID: 1499091626}
+  attackCheckRadius: 0
   groundCheck: {fileID: 1579217407}
   groundCheckDistance: 0.2
   wallCheck: {fileID: 1731308467}
   wallCheckDistance: 0.1
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 256
   attackMovement:
   - {x: 3, y: 0.5}
   - {x: 2, y: 0.5}
   - {x: 5, y: 0.5}
+  counterAttackDuration: 0.2
   moveSpeed: 7
   jumpForce: 13
   dashCooldown: 0.7
@@ -54848,7 +54867,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 216778691
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: -6205605724983672679, guid: 0df228da3461d964fab8f22fe862121f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

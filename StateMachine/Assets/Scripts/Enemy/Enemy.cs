@@ -5,6 +5,12 @@ public class Enemy : Entity
     [SerializeField]
     protected LayerMask playerLayer;
 
+    [Header("적 상태")]
+    public float stunDuration;
+    public Vector2 stunDirection;
+    protected bool canBeStunned = true;
+    [SerializeField] protected GameObject counterImage;
+
     [Header("이동 정보")]
     public float moveSpeed;
     public float idleTime;
@@ -43,5 +49,27 @@ public class Enemy : Entity
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance + facingDirection, transform.position.y));
+    }
+    public virtual void OpenCounterAttackWindow()
+    {
+        canBeStunned = true;
+        counterImage.SetActive(true);
+    }
+
+
+    public virtual void CloseCounterAttackWindow()
+    {
+        canBeStunned = false;
+        counterImage.SetActive(false);
+    }
+    public virtual bool CanBeStunned()
+    {
+        if (canBeStunned)
+        {
+            CloseCounterAttackWindow();
+            return true;
+        }
+
+        return false;
     }
 }

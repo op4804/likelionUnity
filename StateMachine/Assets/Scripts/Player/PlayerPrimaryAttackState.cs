@@ -6,7 +6,7 @@ public class PlayerPrimaryAttackState : PlayerState
     private int comboCounter;
 
     private float lastAttackTime;
-    private float comboWindow = 2.0f;
+    private float comboWindow = 1.0f;
 
     public PlayerPrimaryAttackState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -14,6 +14,8 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        xInput = 0;
 
         if(comboCounter > 2 || Time.time >= lastAttackTime + comboWindow)
         {
@@ -48,7 +50,7 @@ public class PlayerPrimaryAttackState : PlayerState
 
         if(stateTimer <= 0.0f)
         {
-            player.ZeroVelocity();
+            player.SetVelocityZero();
         }
 
         if (triggerCalled)

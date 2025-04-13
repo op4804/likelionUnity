@@ -27,13 +27,13 @@ public class SkeletonBattleState : EnemyState
 
             if (skeleton.IsPlayer().distance < skeleton.attackDistance)
             {
-                if(CanAttack())
-                stateMachine.ChangeState(skeleton.attackState);
+                if (CanAttack())
+                    stateMachine.ChangeState(skeleton.attackState);
             }
         }
         else
         {
-            if(stateTimer <= 0)
+            if (stateTimer <= 0)
             {
                 stateMachine.ChangeState(skeleton.idleState);
             }

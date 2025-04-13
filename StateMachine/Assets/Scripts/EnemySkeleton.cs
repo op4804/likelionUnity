@@ -7,6 +7,7 @@ public class EnemySkeleton : Enemy
     public SkeletonMoveState moveState { get; private set; }
     public SkeletonBattleState battleState { get; private set; }
     public SkeletonAttackState attackState { get; private set; }
+    public SkeletonStunState stunState { get; private set; }
     #endregion
 
     protected override void Awake()
@@ -17,6 +18,7 @@ public class EnemySkeleton : Enemy
         moveState = new SkeletonMoveState(this, stateMachine, "move", this);
         battleState = new SkeletonBattleState(this, stateMachine, "move", this);
         attackState = new SkeletonAttackState(this, stateMachine, "attack", this);
+        stunState = new SkeletonStunState(this, stateMachine, "stun", this);
     }
 
     protected override void Start()
@@ -28,5 +30,24 @@ public class EnemySkeleton : Enemy
     protected override void Update()
     {
         base.Update();
+    }
+
+    private void AnimationTrigger()
+    {
+
+    }
+    private void AttackTrigger()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(attackCheck.position, attackDistance, playerLayer);
+    }
+
+    public override bool CanBeStunned()
+    {
+        if (base.CanBeStunned())
+        {
+            stateMachine.ChangeState(stunState);
+            return true;
+        }
+        return false;
     }
 }

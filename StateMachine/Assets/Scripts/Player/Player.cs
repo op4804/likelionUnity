@@ -1,19 +1,19 @@
-using System;
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class Player : Entity
 {
 
-    [Header("°ø°İ")]
+    [Header("ê³µê²©")]
     public Vector2[] attackMovement;
+    public float counterAttackDuration = 0.2f;
 
-    public bool isBusy { get; private set; } // ÇÃ·¹ÀÌ¾î°¡ ¹Ù»ÛÁö ¿©ºÎ¸¦ ³ªÅ¸³»´Â º¯¼ö?
+    public bool isBusy { get; private set; } // í”Œë ˆì´ì–´ê°€ ë°”ìœì§€ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜?
 
     public float moveSpeed = 10f;
     public float jumpForce = 12f;
 
-    [Header("´ë½¬")]
+    [Header("ëŒ€ì‰¬")]
     public float dashSpeed = 100f;
     public float dashDuration = 0.05f;
 
@@ -32,16 +32,17 @@ public class Player : Entity
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
     public PlayerPrimaryAttackState primaryAttackState { get; private set; }
+    public PlayerCounterAttackState counterAttackState { get; private set; }
 
     #endregion
 
     protected override void Awake()
     {
         base.Awake();
-        // StateMachine »ı¼º
+        // StateMachine ìƒì„±
         stateMachine = new PlayerStateMachine();
 
-        // °¢ State »ı¼º
+        // ê° State ìƒì„±
         idleState = new PlayerIdleState(this, stateMachine, "idle");
         moveState = new PlayerMoveState(this, stateMachine, "move");
         jumpState = new PlayerJumpState(this, stateMachine, "jump");
@@ -50,6 +51,7 @@ public class Player : Entity
         wallSlideState = new PlayerWallSlideState(this, stateMachine, "wallSlide");
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "jump");
         primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, "attack");
+        counterAttackState = new PlayerCounterAttackState(this, stateMachine, "counterAttack");
     }
 
     protected override void Start()
@@ -62,7 +64,6 @@ public class Player : Entity
     protected override void Update()
     {
         base.Update();
-
         stateMachine.currentState.Update();
         DashContoroller();
     }
@@ -77,6 +78,18 @@ public class Player : Entity
     public void AnimationTrigger()
     {
         stateMachine.currentState.AnimationFinishTrigger();
+    }
+
+    private void AttackTrigger()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(attackCheck.position, attackCheckRadius);
+
+
+        foreach (var hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>() != null)
+                hit.GetComponent<Enemy>().Damage();
+        }
     }
 
     private void DashContoroller()

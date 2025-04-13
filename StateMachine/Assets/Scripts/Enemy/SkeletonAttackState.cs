@@ -16,7 +16,7 @@ public class SkeletonAttackState : EnemyState
     {
         base.Update();
 
-        skeleton.ZeroVelocity();
+        skeleton.SetVelocityZero();
 
         if(triggerCalled)
         {
